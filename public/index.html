@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real time polling</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        text-align: center;
+        margin-top: 50px;
+      }
+      button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+      .results {
+        margin-top: 30px;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Vote Your Choice</h1>
+    <div>
+      <button onclick="vote('A')">Option A</button>
+      <button onclick="vote('B')">Option B</button>
+      <button onclick="vote('C')">Option C</button>
+    </div>
+
+    <div class="results">
+      <p>A: <span id="voteA">0</span></p>
+      <p>B: <span id="voteB">0</span></p>
+      <p>C: <span id="voteC">0</span></p>
+    </div>
+  </body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</html>
