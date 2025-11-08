@@ -25,3 +25,12 @@ It’s a simple web app where multiple users can vote simultaneously, and the re
 - Store votes in a database
 
 - Admin dashboard for resetting polls
+
+## Installation and usage
+
+```bash
+npm install
+npm run start
+```
+
+- Now open the link provided on the console and test it
