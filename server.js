@@ -8,41 +8,39 @@ const io = new Server(server);
 
 app.use(express.static("public"));
 
-// poll data
-let votes = { A: 0, B: 0, C: 0 };
-const votedUsers = new Set();
+let poll = {
+  question: "What's your favorite programming language?",
+  votes: { A: 0, B: 0, C: 0 },
+  options: { A: "JavaScript", B: "Python", C: "Go" },
+};
 
 io.on("connection", (socket) => {
-  console.log(`A user connected`);
+  console.log("a user connected");
 
-  //send current votes to new user
-  socket.emit("updateVotes", votes);
+  // send current poll data to new client
+  socket.emit("updatePoll", poll);
 
-  //register id for client
-  socket.on("register", (userId) => {
-    socket.userId = userId;
-  });
-
-  //when a user votes
+  // when a user votes
   socket.on("vote", (option) => {
-    if (!socket.userId || votedUsers.has(socket.userId)) return;
-    if (votes[option] !== undefined) {
-      votes[option]++;
-      votedUsers.add(socket.userId);
-      io.emit("updateVotes", votes); //broadcast to all
+    if (poll.votes[option] !== undefined) {
+      poll.votes[option]++;
+      io.emit("updatePoll", poll);
     }
   });
 
-  socket.on("disconnect", () => {
-    console.log("A user disconnected");
+  // when admin resets votes
+  socket.on("resetPoll", () => {
+    for (let key in poll.votes) poll.votes[key] = 0;
+    io.emit("updatePoll", poll);
+  });
+
+  // when admin changes question
+  socket.on("changeQuestion", (newPoll) => {
+    poll = newPoll;
+    io.emit("updatePoll", poll);
   });
 });
 
-const PORT = 3000;
-server.listen(PORT, () =>
-  console.log(
-    `Server running on port : http://localhost:${PORT}` +
-      `\n` +
-      `Please visit the url as a client in a browser`
-  )
+server.listen(3000, () =>
+  console.log("Server running at http://localhost:3000")
 );

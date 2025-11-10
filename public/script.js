@@ -1,19 +1,19 @@
 const socket = io();
 
-function vote(option) {
-  socket.emit("vote", option);
-}
+socket.on("updatePoll", (poll) => {
+  document.getElementById("question").innerText = poll.question;
 
-socket.on("updateVotes", (votes) => {
-  document.getElementById("voteA").innerText = votes.A;
-  document.getElementById("voteB").innerText = votes.B;
-  document.getElementById("voteC").innerText = votes.C;
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+  for (let key in poll.options) {
+    const btn = document.createElement("button");
+    btn.innerText = poll.options[key];
+    btn.onclick = () => socket.emit("vote", key);
+    optionsDiv.appendChild(btn);
+  }
+
+  const resultsDiv = document.getElementById("results");
+  resultsDiv.innerHTML = Object.entries(poll.votes)
+    .map(([k, v]) => `<p>${poll.options[k]}: ${v}</p>`)
+    .join("");
 });
-
-let userId = localStorage.getItem("pollUserId");
-if (!userId) {
-  userId = crypto.randomUUID();
-  localStorage.setItem("pollUserId", userId);
-}
-
-socket.emit("register", userId);

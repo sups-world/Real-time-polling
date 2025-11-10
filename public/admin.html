@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real Time Polling - Admin</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        text-align: center;
+        margin-top: 50px;
+      }
+      input {
+        margin: 5px;
+        padding: 5px;
+        width: 250px;
+      }
+      button {
+        padding: 10px 20px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Admin Dashboard</h1>
+    <div>
+      <input id="questionInput" placeholder="Enter new question" />
+      <input id="optA" placeholder="Option A" />
+      <input id="optB" placeholder="Option B" />
+      <input id="optC" placeholder="Option C" />
+
+      <button onclick="changePoll()">Change Question</button>
+      <button onclick="resetPoll()">Reset Votes</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>
