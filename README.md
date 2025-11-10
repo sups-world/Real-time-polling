@@ -34,3 +34,13 @@ npm run start
 ```
 
 - Now open the link provided on the console and test it
+
+### Iteration 1
+
+- Tested unique vote based on cookie in browser
+
+### Iteration 2
+
+- Admin page available at /admin.html
+- Able to set a question and reset votes
+- Removed unique user feature for now
